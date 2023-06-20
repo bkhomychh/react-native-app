@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { Title, InputField, Button, Avatar } from 'components';
 import { useThemeContext } from 'contexts/ThemeContext';
@@ -20,6 +21,7 @@ const RegistrationScreen = () => {
   const [password, setPassword] = useState('');
   const [isKeyboardShown, setIsKeyboardShown] = useState(false);
   const theme = useThemeContext();
+  const navigation = useNavigation();
   const { height: WINDOW_HEIGHT } = useWindowDimensions();
 
   useEffect(() => {
@@ -30,7 +32,7 @@ const RegistrationScreen = () => {
 
   const showKeyboard = () => setIsKeyboardShown(true);
   const hideKeyboard = () => Keyboard.dismiss();
-  const handleSubmit = () => console.log({ login, email, password });
+  const handleSubmit = () => navigation.navigate('home');
 
   const formStyles = StyleSheet.create({
     height: isKeyboardShown ? 374 : 'auto',
@@ -78,11 +80,15 @@ const RegistrationScreen = () => {
               />
 
               <Button text="Зареєстуватися" onPress={handleSubmit} style={styles.btn} />
-              <TouchableOpacity activeOpacity={0.7} onPress={() => console.log('click')}>
+
+              <View style={styles.row}>
                 <Text style={[styles.link, { color: theme.colorTextTertiary }]}>
-                  Вже є акаунт? Увійти
+                  Вже є акаунт?{' '}
                 </Text>
-              </TouchableOpacity>
+                <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('login')}>
+                  <Text style={[styles.link, { color: theme.colorTextTertiary }]}>Увійти</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </ImageBackground>
@@ -123,6 +129,9 @@ const styles = StyleSheet.create({
   },
   btn: {
     wrapper: { marginBottom: 16 },
+  },
+  row: {
+    flexDirection: 'row',
   },
   link: {
     fontFamily: 'Roboto-Regular',

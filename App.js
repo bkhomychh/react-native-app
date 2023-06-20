@@ -1,8 +1,13 @@
 import { useFonts } from 'expo-font';
-import { StyleSheet, View } from 'react-native';
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import { RegistrationScreen, LoginScreen, PostsScreen } from 'screens';
+import { RegistrationScreen, LoginScreen } from 'screens';
+import { TabNavigator } from 'components';
 import { ThemeProvider } from 'contexts';
+
+const MainStack = createStackNavigator();
 
 const App = () => {
   const [fontsLoaded] = useFonts({
@@ -17,19 +22,15 @@ const App = () => {
 
   return (
     <ThemeProvider>
-      <View style={styles.wrapper}>
-        <RegistrationScreen />
-        {/* <LoginScreen /> */}
-        {/* <PostsScreen /> */}
-      </View>
+      <NavigationContainer>
+        <MainStack.Navigator initialRouteName="login" screenOptions={{ headerShown: false }}>
+          <MainStack.Screen name="registration" component={RegistrationScreen} />
+          <MainStack.Screen name="login" component={LoginScreen} />
+          <MainStack.Screen name="home" component={TabNavigator} />
+        </MainStack.Navigator>
+      </NavigationContainer>
     </ThemeProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-  },
-});
 
 export default App;

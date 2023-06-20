@@ -11,6 +11,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { Title, InputField, Button } from 'components';
 import { useThemeContext } from 'contexts/ThemeContext';
@@ -21,6 +22,7 @@ const LoginScreen = () => {
   const [password, setPassword] = useState('');
   const [isKeyboardShown, setIsKeyboardShown] = useState(false);
   const theme = useThemeContext();
+  const navigation = useNavigation();
   const { height: WINDOW_HEIGHT } = useWindowDimensions();
 
   useEffect(() => {
@@ -31,7 +33,7 @@ const LoginScreen = () => {
 
   const showKeyboard = () => setIsKeyboardShown(true);
   const hideKeyboard = () => Keyboard.dismiss();
-  const handleSubmit = () => console.log({ email, password });
+  const handleSubmit = () => navigation.navigate('home');
 
   const formStyles = StyleSheet.create({
     paddingBottom: isKeyboardShown ? 20 : 111,
@@ -72,11 +74,17 @@ const LoginScreen = () => {
             </KeyboardAvoidingView>
 
             <Button text="Увійти" onPress={handleSubmit} style={styles.btn} />
-            <TouchableOpacity activeOpacity={0.7} onPress={() => console.log('register')}>
-              <Text style={[styles.link, { color: theme.colorTextTertiary }]}>
-                Немає акаунту? <Text style={styles.underlined}>Зареєструватися</Text>
-              </Text>
-            </TouchableOpacity>
+            <View style={styles.row}>
+              <Text style={[styles.link, { color: theme.colorTextTertiary }]}>Немає акаунту? </Text>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => navigation.navigate('registration')}
+              >
+                <Text style={[styles.link, styles.underlined, { color: theme.colorTextTertiary }]}>
+                  Зареєструватися
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </ImageBackground>
       </View>
@@ -115,10 +123,13 @@ const styles = StyleSheet.create({
   btn: {
     wrapper: { marginBottom: 16 },
   },
+  row: { flexDirection: 'row' },
   link: {
     fontFamily: 'Roboto-Regular',
     fontSize: 16,
     lineHeight: 19,
+    justifyContent: 'center',
+    flexDirection: 'row',
   },
   underlined: {
     textDecorationLine: 'underline',
