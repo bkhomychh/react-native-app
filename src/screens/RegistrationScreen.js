@@ -15,6 +15,9 @@ import { useThemeContext } from 'contexts/ThemeContext';
 import BackgroundImage from 'assets/images/bg-mountains.jpg';
 
 const RegistrationScreen = () => {
+  const [login, setLogin] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isKeyboardShown, setIsKeyboardShown] = useState(false);
   const theme = useThemeContext();
   const { height: WINDOW_HEIGHT } = useWindowDimensions();
@@ -27,6 +30,7 @@ const RegistrationScreen = () => {
 
   const showKeyboard = () => setIsKeyboardShown(true);
   const hideKeyboard = () => Keyboard.dismiss();
+  const handleSubmit = () => console.log({ login, email, password });
 
   const formStyles = StyleSheet.create({
     height: isKeyboardShown ? 374 : 'auto',
@@ -50,20 +54,30 @@ const RegistrationScreen = () => {
               />
               <Title text="Реєстрація" style={styles.title} />
 
-              <InputField placeholder="Логін" onFocus={showKeyboard} style={styles.input} />
+              <InputField
+                placeholder="Логін"
+                onFocus={showKeyboard}
+                onChangeText={setLogin}
+                value={login}
+                style={styles.input}
+              />
               <InputField
                 placeholder="Адреса електронної пошти"
                 onFocus={showKeyboard}
+                onChangeText={setEmail}
+                value={email}
                 style={styles.input}
               />
               <InputField
                 placeholder="Пароль"
                 isPassword
                 onFocus={showKeyboard}
+                onChangeText={setPassword}
+                value={password}
                 style={styles.inputLast}
               />
 
-              <Button text="Зареєстуватися" style={styles.btn} />
+              <Button text="Зареєстуватися" onPress={handleSubmit} style={styles.btn} />
               <TouchableOpacity activeOpacity={0.7} onPress={() => console.log('click')}>
                 <Text style={[styles.link, { color: theme.colorTextTertiary }]}>
                   Вже є акаунт? Увійти

@@ -17,6 +17,8 @@ import { useThemeContext } from 'contexts/ThemeContext';
 import BackgroundImage from 'assets/images/bg-mountains.jpg';
 
 const LoginScreen = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isKeyboardShown, setIsKeyboardShown] = useState(false);
   const theme = useThemeContext();
   const { height: WINDOW_HEIGHT } = useWindowDimensions();
@@ -29,6 +31,7 @@ const LoginScreen = () => {
 
   const showKeyboard = () => setIsKeyboardShown(true);
   const hideKeyboard = () => Keyboard.dismiss();
+  const handleSubmit = () => console.log({ email, password });
 
   const formStyles = StyleSheet.create({
     paddingBottom: isKeyboardShown ? 20 : 111,
@@ -54,17 +57,21 @@ const LoginScreen = () => {
               <InputField
                 placeholder="Адреса електронної пошти"
                 onFocus={showKeyboard}
+                onChangeText={setEmail}
+                value={email}
                 style={styles.input}
               />
               <InputField
                 placeholder="Пароль"
                 isPassword
                 onFocus={showKeyboard}
+                onChangeText={setPassword}
+                value={password}
                 style={styles.inputLast}
               />
             </KeyboardAvoidingView>
 
-            <Button text="Увійти" style={styles.btn} />
+            <Button text="Увійти" onPress={handleSubmit} style={styles.btn} />
             <TouchableOpacity activeOpacity={0.7} onPress={() => console.log('register')}>
               <Text style={[styles.link, { color: theme.colorTextTertiary }]}>
                 Немає акаунту? <Text style={styles.underlined}>Зареєструватися</Text>
