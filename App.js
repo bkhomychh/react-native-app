@@ -1,7 +1,7 @@
 import { useFonts } from 'expo-font';
 import { StyleSheet, View } from 'react-native';
 
-import { RegistrationScreen, LoginScreen } from 'screens';
+import { RegistrationScreen, LoginScreen, PostsScreen } from 'screens';
 import { ThemeProvider } from 'contexts';
 
 const App = () => {
@@ -20,6 +20,7 @@ const App = () => {
       <View style={styles.wrapper}>
         <RegistrationScreen />
         {/* <LoginScreen /> */}
+        {/* <PostsScreen /> */}
       </View>
     </ThemeProvider>
   );
@@ -28,9 +29,6 @@ const App = () => {
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: '#fff',
-    // alignItems: 'center',
-    // justifyContent: 'center',
   },
 });
 

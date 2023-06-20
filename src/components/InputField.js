@@ -4,13 +4,21 @@ import { View, TextInput, Text, TouchableOpacity, StyleSheet } from 'react-nativ
 import { useThemeContext } from 'contexts';
 import { useState } from 'react';
 
-const InputField = ({ placeholder, style, isPassword, ...otherProps }) => {
+const InputField = ({ placeholder, style, isPassword, onFocus, onBlur, ...otherProps }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isValueVisible, setIsValueVisible] = useState(!isPassword);
   const theme = useThemeContext();
 
   const toggleValueVisibility = () => setIsValueVisible(state => !state);
-  const toggleFocus = () => setIsFocused(state => !state);
+
+  const handleFocus = () => {
+    onFocus();
+    setIsFocused(true);
+  };
+  const handleBlur = () => {
+    onBlur();
+    setIsFocused(false);
+  };
 
   const styles = StyleSheet.create({
     wrapper: {
@@ -51,8 +59,8 @@ const InputField = ({ placeholder, style, isPassword, ...otherProps }) => {
         secureTextEntry={!isValueVisible}
         placeholder={placeholder}
         placeholderTextColor={theme.colorTextSecondary}
-        onBlur={toggleFocus}
-        onFocus={toggleFocus}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         style={styles.input}
         {...otherProps}
       />
@@ -73,12 +81,16 @@ InputField.propTypes = {
   placeholder: PropTypes.string,
   isPassword: PropTypes.bool,
   style: PropTypes.object,
+  onFocus: PropTypes.bool,
+  onBlur: PropTypes.bool,
 };
 
 InputField.defaultProps = {
   placeholder: '',
   isPassword: false,
   style: {},
+  onFocus: () => null,
+  onBlur: () => null,
 };
 
 export default InputField;

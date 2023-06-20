@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
 import { useThemeContext } from 'contexts';
