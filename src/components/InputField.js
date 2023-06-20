@@ -81,8 +81,8 @@ InputField.propTypes = {
   placeholder: PropTypes.string,
   isPassword: PropTypes.bool,
   style: PropTypes.object,
-  onFocus: PropTypes.bool,
-  onBlur: PropTypes.bool,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
 };
 
 InputField.defaultProps = {
